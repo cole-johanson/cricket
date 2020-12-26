@@ -1,0 +1,75 @@
+---
+title: '<span style="color: #084658;">Cricket Health Data Assessment</span>'
+author: '<span style="color: #084658;">Cole Johanson</span>'
+date: '<span style="color: #084658;">`r Sys.Date()`'
+output: html_document
+---
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, include=FALSE}
+source(here::here('src/main.R'))
+```
+
+```{css, echo=FALSE} 
+title{ color: red; font: 12px tahoma;} 
+```
+
+<h3><span style="color: #084658;">States with the most and least spending per ESRD patient (2008-2010)</span></h3>
+
+<h4><span style="color: #084658;">2008</span></h4>
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, include=FALSE}
+top_2008 = results_2008$max
+bottom_2008 = results_2008$min
+```
+
+The state with the most spending per ESRD patient in 2008 is **`r top_2008 %>% pull(state_name)`** with `r top_2008 %>% pull(n_beneficiaries)` beneficiaries and `r scales::dollar(top_2008 %>% pull(total_cost))` total spending.
+
+The state with the least spending per ESRD patient in 2008 is **`r bottom_2008 %>% pull(state_name)`** with `r bottom_2008 %>% pull(n_beneficiaries)` beneficiaries and `r scales::dollar(bottom_2008 %>% pull(total_cost))` total spending.
+
+<br>
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+results_2008$plot
+```
+
+<h4><span style="color: #084658;">2009</span></h4>
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, include=FALSE}
+top_2009 = results_2009$max
+bottom_2009 = results_2009$min
+```
+
+The state with the most spending per ESRD patient in 2009 is **`r top_2009 %>% pull(state_name)`** with `r top_2009 %>% pull(n_beneficiaries)` beneficiaries and `r scales::dollar(top_2009 %>% pull(total_cost))` total spending.
+
+The state with the least spending per ESRD patient in 2009 is **`r bottom_2009 %>% pull(state_name)`** with `r bottom_2009 %>% pull(n_beneficiaries)` beneficiaries and `r scales::dollar(bottom_2009 %>% pull(total_cost))` total spending.
+
+<br>
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+results_2009$plot
+```
+
+<h4><span style="color: #084658;">2010</span></h4>
+
+```{r message=FALSE, echo=FALSE, warning=FALSE, include=FALSE}
+top_2010 = results_2010$max
+bottom_2010 = results_2010$min
+```
+
+The state with the most spending per ESRD patient in 2010 is **`r top_2010 %>% pull(state_name)`** with `r top_2010 %>% pull(n_beneficiaries)` beneficiaries and `r scales::dollar(top_2010 %>% pull(total_cost))` total spending.
+
+The state with the least spending per ESRD patient in 2010 is **`r bottom_2010 %>% pull(state_name)`** with `r bottom_2010 %>% pull(n_beneficiaries)` beneficiaries and `r scales::dollar(bottom_2010 %>% pull(total_cost))` total spending.
+
+<br>
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+results_2010$plot
+```
+
+<h3><span style="color: #084658;"> Average amount spent in the last 180 days of life</span></h3>
+
+Out of `r cost_per_dead_pt %>% summarise(n())` patients with a date of death, the average amount spent in the last 180 days was `r scales::dollar(cost_per_dead_pt %>% summarise(mean(cost_last_days)) %>% pull)`, including `r cost_per_dead_pt %>% filter(cost_last_days==0) %>% summarise(n())` patients with no spending in the last 180 days. 
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+histogram_cost_last_days
+```
